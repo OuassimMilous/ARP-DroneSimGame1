@@ -9,10 +9,7 @@
 #include "include/constants.h"
 #include <semaphore.h>
 #include <sys/mman.h>
-#include <curses.h>
 #include <signal.h>
-#include <sys/shm.h>
-#include <sys/mman.h>
 #include <fcntl.h>
 #include <sys/wait.h>
 
@@ -25,9 +22,106 @@ void handle_watchdog_exit(int signum) {
 }
 
 int main(int argc, char *argv[]) {
+
+    //declaration of variables
     pid_t server, UI, drone, watchdog, keyboard;
     int res;
     int num_children = 0;
+
+    // Creation of the a POSIX shared memory objects
+    int *wsharedmem;
+    int wshm_fd;
+    wshm_fd = shm_open(WSHMPATH, O_CREAT | O_RDWR, 0666);
+    if (wshm_fd == -1)
+    {
+        perror("shm_open");
+        exit(EXIT_FAILURE);
+    }
+
+    ftruncate(wshm_fd, 4* sizeof(int));
+
+    double *sharedmem;
+    int shm_fd;
+
+    // Open a POSIX shared memory object
+    shm_fd = shm_open(SHMPATH, O_CREAT | O_RDWR, 0666);
+    if (shm_fd == -1) {
+        perror("shm_open");
+        exit(EXIT_FAILURE);
+    }
+
+    ftruncate(shm_fd, 6 * sizeof(double));
+
+
+    //making the FIFO
+    mkfifo(FIFO_PATH, 0666);
+
+    //creation of semaphores
+    sem_t *semFIFO;
+    semFIFO = sem_open(SEMFIFOPATH, O_CREAT, 0666, 1); 
+    if (semFIFO == SEM_FAILED)
+    {
+        perror("sem_open");
+        exit(EXIT_FAILURE);
+    }
+    sem_init(semFIFO, 1, 0);
+
+
+    sem_t *sem;
+    sem = sem_open(SEMPATH, O_CREAT, 0666, 1); 
+    if (sem == SEM_FAILED)
+    {
+        perror("sem_open");
+
+        exit(EXIT_FAILURE);
+    }
+    sem_init(sem, 1, 0);
+
+
+    sem_t *Wsem;
+    Wsem = sem_open(WSEMPATH, O_CREAT, 0666, 1); 
+    if (Wsem == SEM_FAILED)
+    {
+        perror("sem_open");
+        exit(EXIT_FAILURE);
+    }
+    sem_init(Wsem, 1, 0);
+
+
+    sem_t *semLOG;
+    semLOG = sem_open(LOGSEMPATH, O_CREAT, 0666, 1); 
+    if (semLOG == SEM_FAILED)
+    {
+        perror("sem_open1");
+        exit(EXIT_FAILURE);
+    }
+    sem_init(semLOG, 1, 1);
+
+    sem_t *semcent;
+    semcent = sem_open(SEMCENTPATH, O_CREAT, 0666, 1); 
+    if (semcent == SEM_FAILED)
+    {
+        perror("sem_open1");
+        exit(EXIT_FAILURE);
+    }
+    sem_init(semcent, 1, 0);
+
+    //cleanup the log file
+    sem_wait(semLOG);
+    // Open the file in write mode ("w" stands for write)
+    FILE *file = fopen(LOGPATH, "w");
+    // Check if the file was opened successfully
+    if (file == NULL) {
+        fprintf(stderr, "Error opening the file.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(file, "--------------------------------------------\n");
+    // Close the file
+    fclose(file);
+
+    sem_post(semLOG);
+
 
     // Set up signal handler for child process exit
     signal(SIGCHLD, handle_watchdog_exit);
@@ -150,6 +244,21 @@ int main(int argc, char *argv[]) {
         num_children -= 1;
     }
 
+    //clean up
+    sem_unlink(SEMPATH); 
+    sem_unlink(WSEMPATH); 
+    sem_unlink(SEMFIFOPATH); 
+    sem_unlink(LOGSEMPATH); 
+    sem_unlink(SEMCENTPATH); 
+    sem_close(sem);
+    sem_close(Wsem);
+    sem_close(semFIFO);
+    sem_close(semLOG);
+    sem_close(semcent);
+
+    close(shm_fd);
+    close(wshm_fd);
+    
     // Exit the main process
     return 0;
 }

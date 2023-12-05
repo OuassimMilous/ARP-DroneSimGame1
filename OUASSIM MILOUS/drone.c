@@ -15,6 +15,7 @@
 double forceX = 0.0, forceY = 0.0;
 int exit_flag = 0;
 
+// a functino to update the position according to euler's formula
 void calc_position(char key, double position[6]) {
     switch (key) {
         case 'w':
@@ -54,7 +55,7 @@ void calc_position(char key, double position[6]) {
             break;
     }
 
-    // Calculate new positions using the corrected formula
+    // Calculate new positions using the euler's formula
     double newX = (forceX * T * T - M * position[4] + 2 * M * position[2] + K * T * position[0]) / (M + K * T);
     double newY = (forceY * T * T - M * position[5] + 2 * M * position[3] + K * T * position[1]) / (M + K * T);
 
@@ -70,10 +71,9 @@ void calc_position(char key, double position[6]) {
 }
 
 int main(int argc, char *argv[]) {
+    //declaration of variables
     char receivedChar;
-
-    double position[6];  // Initialize positions
-
+    double position[6];  
     double *sharedmem;
     int shm_fd;
     sem_t *sem;
@@ -105,36 +105,47 @@ int main(int argc, char *argv[]) {
     if (semFIFO == SEM_FAILED) {
         perror("sem_open");
         exit(EXIT_FAILURE);
-    }
+    }            
+    
+    sem_post(semFIFO);
 
-    sem_wait(sem);  // Wait for the semaphore
-    memcpy(position, sharedmem, 6 * sizeof(double));
-    sem_post(sem);
-
+    // open the semaphore and shared memory for the watchdog status 
     int Wshm_fd;
     int *Wsharedmem;
     sem_t *Wsem;
-    Wsem = sem_open(WSEMPATH, O_CREAT, 0666, 1); // Initial value is 1
+    Wsem = sem_open(WSEMPATH, O_RDWR, 0666); 
     if (Wsem == SEM_FAILED) {
         perror("sem_open");
         exit(EXIT_FAILURE);
     }
-    sem_init(Wsem, 1, 1);
-    sem_post(Wsem);
 
-    // Create a POSIX shared memory object
     Wshm_fd = shm_open(WSHMPATH, O_RDWR, 0666);
     if (Wshm_fd == -1) {
         perror("shm_open");
         exit(EXIT_FAILURE);
     }
 
-    // Map the shared memory object into the program's address space
     Wsharedmem = mmap(NULL, 4 * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, Wshm_fd, 0);
     if (Wsharedmem == MAP_FAILED) {
         perror("mmap");
         exit(EXIT_FAILURE);
     }
+
+
+    // open the semaphore for checking if the drone is centered yet
+    sem_t *semcent = sem_open(SEMCENTPATH, O_RDWR, 0666);  
+    if (semcent == SEM_FAILED) {
+        perror("sem_open");
+        exit(EXIT_FAILURE);
+    }
+    
+    //wait for the drone to be centered to start working
+    sem_wait(semcent);
+
+    //get the initial position of the drone
+    sem_wait(sem);  
+    memcpy(position, sharedmem, 6 * sizeof(double));
+    sem_post(sem);
 
     while (exit_flag == 0) {
         // Modify shared memory to indicate activity
@@ -143,22 +154,20 @@ int main(int argc, char *argv[]) {
         sem_post(Wsem);
 
         sem_wait(semFIFO);
-
         // Open the FIFO for reading
         int fd = open(FIFO_PATH, O_RDONLY);
         if (fd == -1) {
             perror("open");
             exit(EXIT_FAILURE);
         }
-
         // Read a character from the FIFO
         read(fd, &receivedChar, sizeof(receivedChar));
         // Display the received character
-
         // Close the FIFO
         close(fd);
         sem_post(semFIFO);
 
+        //update the position
         sem_wait(sem); // Wait for the semaphore
         calc_position(receivedChar, position);
         memcpy(sharedmem, position, 6 * sizeof(double));

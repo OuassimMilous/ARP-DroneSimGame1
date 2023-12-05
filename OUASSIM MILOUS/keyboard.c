@@ -11,41 +11,32 @@
 
 int main(int argc, char *argv[])
 {
-    // Semaphore for FIFO
-    sem_t *semFIFO;
-    semFIFO = sem_open(SEMFIFOPATH, O_CREAT, 0666, 1); // Initial value is 1
-    if (semFIFO == SEM_FAILED)
-    {
-        perror("sem_open");
-        exit(EXIT_FAILURE);
-    }
-    sem_init(semFIFO, 1, 1);
-    sem_post(semFIFO);
-
     // Initialize ncurses
     initscr();
 
-    // Create the FIFO if it doesn't exist
-    mkfifo(FIFO_PATH, 0666);
+    //declaration of variables
     char myChar;
+    int keyPressed;
 
-    // Set non-blocking input
-    timeout(0);
+    // Open the semaphore for FIFO
+    sem_t* semFIFO = sem_open(SEMFIFOPATH, O_RDWR, 0);
+    if (semFIFO == SEM_FAILED) {
+        perror("sem_open3");
+        exit(EXIT_FAILURE);
+    }
+    sem_post(semFIFO);
 
     // Shared memory and semaphore for Watchdog status
     int Wshm_fd;
     int *Wsharedmem;
-    sem_t *Wsem;
-    Wsem = sem_open(WSEMPATH, O_CREAT, 0666, 1); // Initial value is 1
+    sem_t *Wsem = sem_open(WSEMPATH, O_RDWR, 0666); // Initial value is 1
     if (Wsem == SEM_FAILED)
     {
         perror("sem_open");
         exit(EXIT_FAILURE);
     }
-    sem_init(Wsem, 1, 1);
     sem_post(Wsem);
 
-    // Create a POSIX shared memory object
     Wshm_fd = shm_open(WSHMPATH, O_RDWR, 0666);
     if (Wshm_fd == -1)
     {
@@ -68,7 +59,12 @@ int main(int argc, char *argv[])
         perror("sem_open");
         exit(EXIT_FAILURE);
     }
+    sem_post(LOGsem);
 
+ 
+    // Set non-blocking input
+    timeout(0);
+    
     while (1)
     {
         // Modify shared memory to indicate activity
@@ -76,7 +72,7 @@ int main(int argc, char *argv[])
         Wsharedmem[2] = 1; 
         sem_post(Wsem);
 
-        int keyPressed = getch();
+        keyPressed = getch();
 
         if (keyPressed != ERR)
         {
@@ -89,8 +85,8 @@ int main(int argc, char *argv[])
                 exit(EXIT_FAILURE);
             }
             write(fd, &keyPressed, sizeof(keyPressed));
-            sem_post(semFIFO);
             close(fd);
+            sem_post(semFIFO);
 
             sem_wait(LOGsem);
 

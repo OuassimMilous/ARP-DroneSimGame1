@@ -13,8 +13,10 @@
 #define FIFO_PATH "/tmp/myfifo"
 
 
-#define LOGPATH "logfile.txt"
+#define LOGPATH "./log/logfile.txt"
 #define LOGSEMPATH "/LOGsem"
+
+#define SEMCENTPATH "/centered"
 
 
 #endif // !CONSTANTS_H

@@ -1,5 +1,9 @@
 Short Definitions of Active Components:
 
+    Master (master.c):
+        Purpose: Creates the shared memory and the semaphores and it forks the processes and launches the other active components.
+        Primitives Used: Shared memory, semaphores, file operations, fork.
+
     Server (server.c):
         Purpose: Manages shared memory and logs drone positions.
         Primitives Used: Shared memory, semaphores, file operations.
@@ -25,6 +29,7 @@ List of Components, Directories, Files:
 
     Directories:
         include/: Contains header files.
+        log/: Contains log files.
         /: Contains source code files.
 
     Files:
@@ -42,7 +47,8 @@ Instructions for Installing and Running:
 
     Installation:
         Ensure you have the necessary libraries installed (ncurses).
-        Compile the components using make (Execute "make" on the Ouassim Milous directory).
+        Compile the components using make (Execute "make" on the Ouassim Milous directory). 
+        ps: if you cloned it from github you might need to execute "mkdir build" before building the project.
 
     Running:
         (on the Ouassim Milous directory)Execute ./build/master.
@@ -92,6 +98,7 @@ Control Keys:
         Sets both horizontal and vertical forces to zero, stopping the drone.
 
     ESC (Exit):
+        Exits the program.
         
 
 

@@ -8,24 +8,21 @@
 #include "include/constants.h"
 
 int main(int argc, char *argv[]) {
-    // Shared memory variables
+    // declaration of variables
     double *sharedmem;
     int shm_fd;
     sem_t *sem;
     FILE *file;
     char slog[100];
+    double position[6];
 
-    // Position information
-    double position[6]; // Initialize positions
-
-    // Open a POSIX shared memory object
-    shm_fd = shm_open(SHMPATH, O_CREAT | O_RDWR, 0666);
+    // Open the POSIX shared memory object
+    shm_fd = shm_open(SHMPATH, O_RDWR, 0666);
     if (shm_fd == -1) {
         perror("shm_open");
         exit(EXIT_FAILURE);
     }
 
-    ftruncate(shm_fd, 6 * sizeof(double));
 
     // Map the shared memory object into the program's address space
     sharedmem = mmap(NULL, 6 * sizeof(double), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
@@ -34,52 +31,37 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // Create or open a semaphore for shared memory access
-    sem = sem_open(SEMPATH, O_CREAT, 0666, 1); // Initial value is 1
+    // open a semaphore for shared memory access
+    sem = sem_open(SEMPATH, O_RDWR, 0666); 
     if (sem == SEM_FAILED) {
         perror("sem_open");
         exit(EXIT_FAILURE);
-    }
+    }  
+    sem_post(sem);
 
-    // Create or open a semaphore for logging
-    sem_t *LOGsem = sem_open(LOGSEMPATH, O_CREAT, 0666, 1); // Initial value is 1
+    // open the semaphore for logging
+    sem_t *LOGsem = sem_open(LOGSEMPATH, O_RDWR, 0666); // Initial value is 1
     if (LOGsem == SEM_FAILED) {
         perror("sem_open");
         exit(EXIT_FAILURE);
     }
-
-    // Modify shared memory to indicate activity
-    sem_wait(LOGsem);
-
-    // Open the file in write mode ("w" stands for write)
-    file = fopen(LOGPATH, "w");
-    // Check if the file was opened successfully
-    if (file == NULL) {
-        fprintf(stderr, "Error opening the file.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    fprintf(file, "--------------------------------------------\n");
-    // Close the file
-    fclose(file);
-
     sem_post(LOGsem);
+
 
     // Watchdog process shared memory variables
     int Wshm_fd;
     int *Wsharedmem;
     sem_t *Wsem;
 
-    // Create or open a semaphore for Watchdog process
-    Wsem = sem_open(WSEMPATH, O_CREAT, 0666, 1); // Initial value is 1
+    // open a semaphore for Watchdog process
+    Wsem = sem_open(WSEMPATH, O_RDWR, 0666); 
     if (Wsem == SEM_FAILED) {
         perror("sem_open");
         exit(EXIT_FAILURE);
     }
-    sem_init(Wsem, 1, 1);
     sem_post(Wsem);
 
-    // Create a POSIX shared memory object for Watchdog process
+    // open the POSIX shared memory object for Watchdog process
     Wshm_fd = shm_open(WSHMPATH, O_RDWR, 0666);
     if (Wshm_fd == -1) {
         perror("shm_open");

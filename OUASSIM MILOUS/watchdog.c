@@ -20,19 +20,18 @@ int main(int argc, char const *argv[])
     clear();   // Clear the screen
 
     int processes[NUM_PROCESSES]; // Array to store process statuses
+   
+    // opening the POSIX shared memory object
     int *sharedmem;
     int shm_fd;
     sem_t *sem;
 
-    // Create a POSIX shared memory object
-    shm_fd = shm_open(WSHMPATH, O_CREAT | O_RDWR, 0666);
+    shm_fd = shm_open(WSHMPATH, O_RDWR, 0666);
     if (shm_fd == -1)
     {
         perror("shm_open");
         exit(EXIT_FAILURE);
     }
-
-    ftruncate(shm_fd, SHARED_MEM_SIZE);
 
     // Map the shared memory object into the program's address space
     sharedmem = mmap(NULL, SHARED_MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
@@ -42,15 +41,16 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     }
 
-    // Create or open a semaphore
-    sem = sem_open(WSEMPATH, O_CREAT, 0666, 1);
+    // open the semaphore
+    sem = sem_open(WSEMPATH, O_RDWR, 0666);
     if (sem == SEM_FAILED)
     {
         perror("sem_open");
         exit(EXIT_FAILURE);
     }
+    sem_post(sem);
 
-    // Create or open a semaphore for logging
+    // open the semaphore for logging
     sem_t *LOGsem = sem_open(LOGSEMPATH, O_RDWR, 0666); // Initial value is 1
     if (LOGsem == SEM_FAILED)
     {
@@ -58,6 +58,7 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     }
 
+    //declare the variables
     FILE *file;
     char slog[100];
 
@@ -70,12 +71,13 @@ int main(int argc, char const *argv[])
         }
 
         sem_wait(sem);                // Wait for the semaphore
-        memcpy(sharedmem, processes, SHARED_MEM_SIZE);
+        memcpy(sharedmem, processes, SHARED_MEM_SIZE); //update the statuses to 0
         sem_post(sem);                // Release the semaphore
-        sleep(1);
+        
+        sleep(1); //wait for a second
 
         sem_wait(sem);                // Wait for the semaphore
-        memcpy(processes, sharedmem, SHARED_MEM_SIZE);
+        memcpy(processes, sharedmem, SHARED_MEM_SIZE); //get the new status
         sem_post(sem);                // Release the semaphore
 
         // Display process statuses using ncurses
