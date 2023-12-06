@@ -47,11 +47,11 @@ Instructions for Installing and Running:
 
     Installation:
         Ensure you have the necessary libraries installed (ncurses).
-        Compile the components using make (Execute "make" on the Ouassim Milous directory). 
+        Compile the components using make (Execute "make" on the root directory). 
         ps: if you cloned it from github you might need to execute "mkdir build" before building the project.
 
     Running:
-        (on the Ouassim Milous directory)Execute ./build/master.
+        Execute ./build/master.
 
 Operational Instructions:
 
