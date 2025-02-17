@@ -1,0 +1,191 @@
+--------------------------------------------
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[server] position: 0.000000, 0.000000
+[UI]: Window created
+[UI]: Drone centralized
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[server] position: 55.000000, 14.000000
+[Keyboard]: key a pressed
+[server] position: 54.500000, 14.000000
+[server] position: 54.500000, 14.000000
+[server] position: 54.000000, 14.000000
+[server] position: 54.000000, 14.000000
+[server] position: 53.500000, 14.000000
+[server] position: 53.500000, 14.000000
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[Keyboard]: key w pressed
+[server] position: 53.000000, 13.500000
+[server] position: 53.000000, 13.500000
+[server] position: 52.500000, 12.750000
+[server] position: 52.500000, 12.750000
+[server] position: 52.000000, 11.875000
+[server] position: 52.000000, 11.875000
+[server] position: 51.500000, 10.937500
+[server] position: 51.500000, 10.937500
+[server] position: 51.000000, 9.968750
+[server] position: 51.000000, 9.968750
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[Keyboard]: key s pressed
+[server] position: 50.500000, 9.484375
+[server] position: 50.500000, 9.484375
+[Keyboard]: key d pressed
+[server] position: 50.500000, 9.242188
+[server] position: 50.500000, 9.242188
+[Keyboard]: key s pressed
+[server] position: 50.500000, 9.621094
+[server] position: 50.500000, 9.621094
+[Keyboard]: key d pressed
+[server] position: 51.000000, 10.310547
+[server] position: 51.000000, 10.310547
+[Keyboard]: key s pressed
+[server] position: 51.500000, 11.655273
+[server] position: 51.500000, 11.655273
+[watchdog] Server: 1 , UI: 1, Keyboard: 1, Drone: 1
+[Keyboard]: key a pressed
+[server] position: 51.500000, 13.327637
+[server] position: 51.500000, 13.327637
+[server] position: 51.500000, 15.163818
+[server] position: 51.500000, 15.163818
+[server] position: 51.500000, 17.081909
+[watchdog] Server: 0 , UI: 0, Keyboard: 0, Drone: 0
